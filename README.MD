@@ -1,5 +1,5 @@
 ## About
-Odd Jobs is an Android-based E-Commerce Application that can be used by buyers and sellers to facilitates their shopping experience. This app includes nearly all features including payment/COD options.
+E shop is an Android-based E-Commerce Application that can be used by buyers and sellers to facilitates their shopping experience. This app includes nearly all features including payment/COD options.
 
 
 ## Features
