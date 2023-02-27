@@ -1,5 +1,10 @@
 package com.eshop.project;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,16 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.eshop.project.ChecksumActivity;
-import com.eshop.project.CommaSeperate;
-import com.eshop.project.MainActivity;
-import com.eshop.project.R;
-import com.eshop.project.login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,7 +34,7 @@ public class Individual_product_view_Activity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private TextView tvPName, tvPPrice, tvPDesc, tvSName;
+    private TextView tvPName, tvPPrice, tvPDesc, tvSName , tvPQuantity;
     private ImageView productIV;
     private Button button2,button;
 
@@ -51,6 +48,7 @@ public class Individual_product_view_Activity extends AppCompatActivity {
     private String product_key;
     private String product_name;
     private String product_price;
+    private String product_quantity;
     private String product_description;
     private String seller_name;
     private String product_image;
@@ -81,6 +79,7 @@ public class Individual_product_view_Activity extends AppCompatActivity {
         tvPPrice = findViewById(R.id.tvPPrice);
         tvPDesc = findViewById(R.id.tvPDesc);
         tvSName = findViewById(R.id.tvSName);
+        tvPQuantity=findViewById(R.id.tvPQuantity);
         productIV = findViewById(R.id.productIV);
         button2 = findViewById(R.id.button2);
         button = findViewById(R.id.button);
@@ -105,6 +104,7 @@ public class Individual_product_view_Activity extends AppCompatActivity {
                         product_description = dataSnapshot.child("product_description").getValue().toString();
                         product_name = dataSnapshot.child("product_name").getValue().toString();
                         product_price = dataSnapshot.child("product_price").getValue().toString();
+                        product_quantity = dataSnapshot.child("product_quantity").getValue().toString();
                         product_image = dataSnapshot.child("product_image").getValue().toString();
                         seller_name = dataSnapshot.child("company_name").getValue().toString();
 
@@ -126,6 +126,7 @@ public class Individual_product_view_Activity extends AppCompatActivity {
                         productIntent.putExtra("product_image", product_image);
                         productIntent.putExtra("product_description", product_description);
                         productIntent.putExtra("company_name", seller_name);
+                        productIntent.putExtra("product_quantity",product_quantity);
                         productIntent.putExtra("from_cart", "no");
                         startActivity(productIntent);
                     }
@@ -147,7 +148,8 @@ public class Individual_product_view_Activity extends AppCompatActivity {
         Picasso.get().load(product_image).fit().into(productIV);
         toolbar.setTitle(product_name);
         tvPName.setText(product_name);
-        tvSName.setText("by " + seller_name);
+        tvSName.setText("By : " + seller_name);
+        tvPQuantity.setText(("Quantity : "+ product_quantity));
         String newNumber = CommaSeperate.getFormatedNumber(product_price);
         tvPPrice.setText("₹" + newNumber);
         tvPDesc.setText(product_description);
@@ -159,6 +161,7 @@ public class Individual_product_view_Activity extends AppCompatActivity {
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("product_name", product_name);
         dataMap.put("product_price", product_price);
+        dataMap.put("product_quantity",product_quantity);
         dataMap.put("product_image", product_image);
         dataMap.put("company_name", seller_name);
         dataMap.put("cart_key", cart_key);

@@ -123,6 +123,25 @@
                 android:paddingRight="5dp" />
 
             <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Product Quantity"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etAddProductQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Product Quantity"
+                android:inputType="number"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <TextView
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,12 +1,24 @@
 package com.eshop.project;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,12 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.eshop.project.R;
-import com.eshop.project.login;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,14 +48,19 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AddNewProductActivity extends AppCompatActivity {
 
 
     private Toolbar toolbar2;
-    private EditText etAddProductName, etAddProductPrice, etAddProductDescription;
+    private EditText etAddProductName ,etAddProductQuantity, etAddProductPrice, etAddProductDescription;
     private Button addbtn;
     private ImageView imageView5;
 
@@ -70,6 +81,7 @@ public class AddNewProductActivity extends AppCompatActivity {
     private String company_key;
     private String product_key;
     private String product_name;
+    private String product_quantity;
     private String product_price;
     private String product_description;
     private String item=null;
@@ -112,6 +124,7 @@ public class AddNewProductActivity extends AppCompatActivity {
 
 
         etAddProductName = findViewById(R.id.etAddProductName);
+        etAddProductQuantity = findViewById(R.id.etAddProductQuantity);
         etAddProductPrice = findViewById(R.id.etAddProductPrice);
         llr=findViewById(R.id.addll);
         etAddProductDescription = findViewById(R.id.etAddProductDescription);
@@ -226,6 +239,7 @@ public class AddNewProductActivity extends AppCompatActivity {
 
         product_name = etAddProductName.getText().toString();
         product_price = etAddProductPrice.getText().toString();
+        product_quantity = etAddProductQuantity.getText().toString();
         product_description = etAddProductDescription.getText().toString();
 
         if (product_name.isEmpty()) {
@@ -236,7 +250,8 @@ public class AddNewProductActivity extends AppCompatActivity {
             etAddProductDescription.setError("Enter product description");
         } else  if (item.equals("Select Product Category")) {
             Toast.makeText(getApplicationContext(), "Please select a category", Toast.LENGTH_LONG).show();
-        }else  {
+        }else if (product_quantity.isEmpty()) {
+            etAddProductQuantity.setError("Enter product Quantity");}else{
 
             progressDoalog.show();
 
@@ -248,7 +263,7 @@ public class AddNewProductActivity extends AppCompatActivity {
                     if (dataSnapshot.exists()){
                         try {
                             company_name=dataSnapshot.child("company_name").getValue().toString().trim();
-                           uploadDetails();
+                            uploadDetails();
 
                         }catch (Exception e){
 
@@ -297,6 +312,7 @@ public class AddNewProductActivity extends AppCompatActivity {
                 bmp.compress(Bitmap.CompressFormat.JPEG,imagecompressfactor, baos);
                 data = baos.toByteArray();
             }catch (Exception e){
+
             }
 
             //image compression done
@@ -355,6 +371,7 @@ public class AddNewProductActivity extends AppCompatActivity {
                                     dataMap.put("company_key", company_key);
                                     dataMap.put("company_name", company_name);
                                     dataMap.put("product_added_time", ts_long);
+                                    dataMap.put("product_quantity", product_quantity);
                                     dataMap.put("product_category", item);
                                     dataMap.put("product_key", product_key);
 

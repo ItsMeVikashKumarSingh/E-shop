@@ -43,6 +43,8 @@ public class SplashScreen extends AppCompatActivity {
         versionName = BuildConfig.VERSION_NAME;
         mdatabse=FirebaseDatabase.getInstance().getReference();
 
+        startActivity(new Intent(getApplicationContext(), login.class));
+        finishAffinity();
 
 
         Animation animation = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotation);
