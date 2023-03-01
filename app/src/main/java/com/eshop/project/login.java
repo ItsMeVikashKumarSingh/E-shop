@@ -31,7 +31,6 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.HashMap;
 
 public class login extends AppCompatActivity {
-
     private TextInputLayout etLEmail, etLPassword;
     private AppCompatButton lbtn, lrbtn;
 

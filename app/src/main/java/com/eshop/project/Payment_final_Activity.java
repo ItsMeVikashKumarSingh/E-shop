@@ -335,11 +335,11 @@ public class Payment_final_Activity extends AppCompatActivity {
 
          easyUpiPayment = new EasyUpiPayment.Builder()
                 .with(Payment_final_Activity.this)
-                .setPayeeVpa("helpdesk@barodampay")
-                .setPayeeName("Saurabh Pandey")
+                .setPayeeVpa("vikash1151@ibl")
+                .setPayeeName("Surekha Devi")
                 .setTransactionId("TI"+Orderid)
                 .setTransactionRefId("TRI"+Orderid)
-                .setDescription("Paying to Odd Jobs Pvt Ltd")
+                .setDescription("Paying to E shop Pvt Ltd")
                 .setAmount((total_price+".00").trim())
                 .build();
 
